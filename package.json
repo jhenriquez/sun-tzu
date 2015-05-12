@@ -1,0 +1,29 @@
+{
+  "name": "sun-tzu",
+  "description": "Codewars cli and API wrapper",
+  "version": "0.0.1",
+  "author": {
+    "name": "Julio Henriquez",
+    "email": "julio.m.henriquez@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jhenriquez/sun-tzu.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jhenriquez/sun-tzu/issues"
+  },
+  "main": "lib/sun-tzu",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": ">=0.11.0",
+    "grunt-contrib-watch": ">=0.6.1",
+    "grunt": "~0.4.5"
+  },
+  "keywords": []
+}

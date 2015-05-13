@@ -35,6 +35,19 @@ describe('Sun-Tzu', function () {
     it('#key - should match the configured (on environment)', function () {
       tzu.key.should.eql(process.env.CW_ACCESS_KEY);
     });
+    
+    it('#getChallenge - should return requested challenge name', function (done) {
+      var slug = 'valid-braces';
+      tzu.getChallenge(slug)
+        .then(function (challenge) {
+          challenge.slug.should.eql(slug);
+          challenge.name.should.exist();
+          challenge.description.should.exist();
+          done();
+        }, function (err) {
+          done(err);
+        });
+    });
   });
   
   describe('Setup - Constructor', function () {
@@ -56,5 +69,5 @@ describe('Sun-Tzu', function () {
     it('#key - should match the configured (by constructor)', function () {
       tzu.key.should.eql('constructor_access_key');
     });
-  });
+  }); 
 });

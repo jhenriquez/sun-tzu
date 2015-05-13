@@ -48,6 +48,18 @@ describe('Sun-Tzu', function () {
           done(err);
         });
     });
+    
+    it.only('#train (random - peek) - should return a new challenge without starting a session', function (done) {
+      tzu.train(Tzu.languages.JavaScript, Tzu.trainStrategies.random, true)
+        .then(function (challenge) {
+          challenge.name.should.exist();
+          challenge.description.should.exist();
+          chai.expect(challenge.session).to.not.exist();
+          done();
+        }, function (err) {
+          done(err);
+        });
+    });
   });
   
   describe('Setup - Constructor', function () {

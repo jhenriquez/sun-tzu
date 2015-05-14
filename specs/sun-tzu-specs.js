@@ -60,6 +60,20 @@ describe('Sun-Tzu', function () {
           done(err);
         });
     });
+    
+    it('#trainChallenge - should return the requested challenge', function (done) {
+      tzu.trainChallenge('anything-to-integer', Tzu.languages.JavaScript)
+        .then(function (challenge) {
+          challenge.name.should.eql('Anything to integer');
+          challenge.slug.should.eql('anything-to-integer');
+          challenge.description.should.exist();
+          challenge.session.should.exist();
+          challenge.session.setup.should.exist();
+          done();
+        }, function (err) {
+          done(err);
+        });
+    });
   });
   
   describe('Setup - Constructor', function () {

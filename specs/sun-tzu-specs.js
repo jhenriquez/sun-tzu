@@ -49,7 +49,7 @@ describe('Sun-Tzu', function () {
         });
     });
     
-    it.only('#train (random - peek) - should return a new challenge without starting a session', function (done) {
+    it('#train (random - peek) - should return a new challenge without starting a session', function (done) {
       tzu.train(Tzu.languages.JavaScript, Tzu.trainStrategies.random, true)
         .then(function (challenge) {
           challenge.name.should.exist();

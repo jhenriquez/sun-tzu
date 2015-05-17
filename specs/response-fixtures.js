@@ -184,7 +184,7 @@ module.exports = [
 			   "success":true,
 			   "dmid":"4rsdaDf8d"
 			}
-		}
+		};
 	}
 }
 ];

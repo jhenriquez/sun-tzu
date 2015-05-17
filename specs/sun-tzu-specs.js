@@ -36,7 +36,7 @@ describe('Sun-Tzu', function () {
       tzu.key.should.eql(process.env.CW_ACCESS_KEY);
     });
     
-    it('#getChallenge - should return requested challenge name', function (done) {
+    it('#getChallenge - should resolve to requested challenge name', function (done) {
       var slug = 'valid-braces';
       tzu.getChallenge(slug)
         .then(function (challenge) {
@@ -49,7 +49,7 @@ describe('Sun-Tzu', function () {
         });
     });
     
-    it('#train (random - peek) - should return a new challenge without starting a session', function (done) {
+    it('#train (random - peek) - should resolve to a new challenge without starting a session', function (done) {
       tzu.train(Tzu.languages.JavaScript, Tzu.trainStrategies.random, true)
         .then(function (challenge) {
           challenge.name.should.exist();
@@ -61,7 +61,7 @@ describe('Sun-Tzu', function () {
         });
     });
     
-    it('#trainChallenge - should return the requested challenge', function (done) {
+    it('#trainChallenge - should resolve to the requested challenge', function (done) {
       tzu.trainChallenge('anything-to-integer', Tzu.languages.JavaScript)
         .then(function (challenge) {
           challenge.name.should.eql('Anything to integer');
@@ -73,6 +73,20 @@ describe('Sun-Tzu', function () {
         }, function (err) {
           done(err);
         });
+    });
+    
+    it('#attemptSolution - should resolve to a deferred id', function (done) {
+      tzu.attemptSolution({
+        solution: 'solutionid',
+        project: 'projectid',
+        code: '// a humble peace of javascript code.'
+      })
+      .then(function (rs) {
+        rs.dmid.should.exist();
+        done();
+      }, function (err) {
+        done(err);
+      });
     });
   });
   

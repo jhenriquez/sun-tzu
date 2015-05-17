@@ -88,6 +88,19 @@ describe('Sun-Tzu', function () {
         done(err);
       });
     });
+    
+    it('#finalizeSolution - should resolve to a deferred id', function (done) {
+      tzu.finalizeSolution({
+        solution: 'solutionid',
+        project: 'projectid'
+      })
+      .then(function (rs) {
+        rs.success.should.exist();
+        done();
+      }, function (err) {
+        done(err);
+      });
+    });
   });
   
   describe('Setup - Constructor', function () {

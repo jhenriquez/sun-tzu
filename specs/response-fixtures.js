@@ -186,5 +186,26 @@ module.exports = [
 			}
 		};
 	}
+},
+{
+	pattern: '/code-challenges/projects/(.+)/solutions/(.+)/finalize',
+	fixtures: function (match) {
+		if (match[1] !== 'projectid') {
+			throw new Error('Hey! Should have sent projectid in the url.');
+		}
+		
+		if (match[2] !== 'solutionid') {
+			throw new Error('Hey! Should have sent solutionid in the url.');
+		}
+		
+		return "success";
+	},
+	callback: function (matches, data) {
+		return {
+			body: {
+			   "success":true
+			}
+		};
+	}
 }
 ];

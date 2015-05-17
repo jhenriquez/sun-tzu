@@ -207,5 +207,25 @@ module.exports = [
 			}
 		};
 	}
+},
+{
+	pattern: '/deferred/(.+)$',
+	fixtures: function (match) {
+		return "success";
+	},
+	callback: function (matches, data) {
+		return {
+			body: {
+			   "success":true,
+			   "dmid":":dmid",
+			   "valid": false,
+			   "reason":"-e: Value is not what was expected (Test::Error)\n",
+			   "output":[
+			      "<div class='console-failed'>Value is not what was expected</div>"
+			   ],
+			   "wall_time":45
+			}
+		};
+	}
 }
 ];

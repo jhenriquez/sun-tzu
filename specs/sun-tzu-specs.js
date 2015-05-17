@@ -101,6 +101,18 @@ describe('Sun-Tzu', function () {
         done(err);
       });
     });
+    
+    it('#getDeferred - should resolve to a valid response', function (done) {
+      tzu.getDeferred('dmid')
+        .then(function (rs) {
+          rs.success.should.exist();
+          rs.dmid.should.exist();
+          rs.dmid.should.eql(':dmid');
+          done();
+        }, function (err) {
+          done(err);
+        });
+    });
   });
   
   describe('Setup - Constructor', function () {

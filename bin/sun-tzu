@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+// init --username <username> --key <key>
+
+// train <language> --strategy <strategy> --peak (default: false -- could be configured in the file)
+
+// challenge <slug> --language <language>
+
+// solve <slug> --language <language>
+
+// complete <slug> --languasge <language>
+
+// user <username>

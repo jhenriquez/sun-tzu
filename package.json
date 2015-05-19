@@ -1,7 +1,7 @@
 {
   "name": "sun-tzu",
   "description": "Codewars cli and API wrapper",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "author": {
     "name": "Julio Henriquez",
     "email": "julio.m.henriquez@gmail.com"
@@ -17,8 +17,12 @@
   "engines": {
     "node": ">= 0.8.0"
   },
+  "preferGlobal": true,
+  "directories": {
+    "bin": "./bin"
+  },
   "scripts": {
-    "test": "grunt"
+    "test": "mocha specs/"
   },
   "devDependencies": {
     "chai": "^2.3.0",

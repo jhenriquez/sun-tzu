@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+
+var args = require('commander');
+var cli = require('../lib/cli');
+
+args
+	.option('-u, --username <username>', 'Codewars username.')
+	.option('-k, --key <key>', 'Codewars accesskey.')
+	.option('-f, --force', 'overwrite existen configuration file.')
+	.parse(process.argv);
+
+console.log(); // aesthetic empty Line
+
+if (!args.username) {
+  console.log('warning: no username specified.');
+}
+
+if (!args.key) {
+  console.log('warning: no access_key specified.');
+}
+
+console.log(); // aesthetic empty Line
+
+var action_message = 'Creating .sun-tzu config file...';
+
+if (args.force) {
+  action_message += ' use violence if necessary.';
+}
+
+console.log(action_message);
+
+cli.init({ username: args.username || '', key: args.key || '' }, { force: !!args.force })
+  .then(function () {
+	  console.log('Done...');
+  }, function (err) {
+  	console.log(err.message);
+    console.log('Violence is not allowed...');
+    console.log(); // aesthetic empty Line
+  })
+  .finally(function () {
+	  console.log('...Good-Bye!');
+  });
+  
+console.log(); // aesthetic empty Line

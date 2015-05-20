@@ -1,13 +1,12 @@
 #!/usr/bin/env node
 
-// init --username <username> --key <key>
-
-// train <language> --strategy <strategy> --peak (default: false -- could be configured in the file)
-
-// challenge <slug> --language <language>
-
-// solve <slug> --language <language>
-
-// complete <slug> --languasge <language>
-
-// user <username>
+var program = require('commander');
+  
+  program
+    .command('init', 'Initializes a kata storage directory.')
+//	.command('train [language]', 'Sets up the next challenge in your training path.')
+//	.command('challenge [kata]', '')
+//	.command('solve [kata]', '')
+//	.command('complete [kata]', '')
+//	.command('user [username]', '')
+	.parse(process.argv);

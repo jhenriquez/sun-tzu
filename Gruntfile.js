@@ -1,5 +1,5 @@
 module.exports = function (g) {
-  var watchedFiles = ['Gruntfile.js', 'specs/**/*.js','lib/**/*.js'];
+  var watchedFiles = ['Gruntfile.js', 'specs/**/*.js','lib/**/*.js', 'bin/**/*'];
   g.initConfig({
     
     jshint: {

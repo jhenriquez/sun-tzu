@@ -25,4 +25,25 @@ Options:
 -k, --key <access_key>
 -f, --force
 
+### Development ###
+
+#### Setup ####
+
+A simple ```npm install``` should install all required dependencies. The solution uses grunt for some automated tasks, installing grunt-cli is recommended.
+
+#### Code Style ####
+
+JSHint is configured to help maintain code style. The code can be linted on demand by running ```grunt jshint``` or with every change by starting a watch on the files with: ```grunt watch```.
+
+#### Automated Tests ####
+
+The automated tests are written using mocha. And can be executed by executing either of this commands:
+
+```npm test```
+```mocha specs/```
+
+or
+
+```mocha # from the specs directory.``` 
+
 [1]: http://dev.codewars.com/

@@ -1,6 +1,8 @@
 var fs        = require('fs');
 var path      = require('path');
 var cli       = require('../lib/cli');
+var IOHelpers = require('../lib/cli-io');
+var rimraf    = require('rimraf');
 var chai      = require('chai');
 var dirtyChai = require('dirty-chai');
 
@@ -24,13 +26,14 @@ describe('tain - Command-Line Interface', function () {
     fs.unlink(configFile, function () { done(); });
   });
   
-  describe('Handling language directory', function () {
-    
-    afterEach(function () {
-      try {
-        fs.rmdirSync(languageDir);
-      } catch (err) { /* Something wrong, not sure if I care. :p */}
-    });
+  afterEach(function (done) {
+      rimraf(languageDir, function (err) {
+        if(err) { done(err); }
+        done();
+      });
+  });
+  
+  describe('Handle Language Directory', function () {
     
     it('should create a folder for the language if it does not exist', function (done) {
       fs.stat(languageDir, function (err, pathInfo) {
@@ -92,4 +95,59 @@ describe('tain - Command-Line Interface', function () {
     });
   });
   
+  describe('Handle Challenge Persistence', function () {
+    it("should ensure a directory for the kata exists, create it if doesn't", function (done) {
+      cli
+        .train({ language: 'javascript' })
+        .then(function (challenge) {
+          var challengeDirectoryPath = path.join(process.cwd(), challenge.language, challenge.name);
+          
+          fs.stat(challengeDirectoryPath, function (err, stat) {
+            if (err) { return done(err); }
+            chai.expect(stat).to.exist();
+            stat.isDirectory().should.be.ok();
+            done();
+          });
+          
+        }, function (err) {
+          done(err);
+        });
+    });
+    
+    it("should save the current session information", function (done) {
+      cli
+        .train({ language: 'javascript' })
+        .then(function (challenge) {
+          var sessionFilePath = path.join(process.cwd(), challenge.language, challenge.name, cli.SESSION_FILENAME);
+          fs.readFile(sessionFilePath, function (err, content) {
+            if (err) { return done(err); }
+            var session = JSON.parse(content);
+            chai.expect(session).to.be.a('object');
+            chai.expect(session.solution).to.exist();
+            chai.expect(session.project).to.exist();
+            done();
+          });
+        }, function (err) {
+          done(err);
+        });
+    });
+    
+    it("should create a file for the challenge's code", function (done) {
+      cli
+        .train({ language: 'javascript' })
+        .then(function (challenge) {
+          var codeFilename = challenge.name + IOHelpers.getLanguageExtension(challenge.language);
+          var codeFilePath = path.join(process.cwd(), challenge.language, challenge.name, codeFilename);
+          
+          fs.readFile(codeFilePath, { encoding: 'utf8' },function (err, content) {
+            if (err) { return done(err); }
+            chai.expect(content).to.be.a('string');
+            content.should.eql('function toInteger(n) {\n  \n}');
+            done();
+          });
+        }, function (err) {
+          done(err);
+        });
+    });
+  });
 });

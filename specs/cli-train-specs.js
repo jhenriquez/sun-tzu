@@ -24,68 +24,72 @@ describe('tain - Command-Line Interface', function () {
     fs.unlink(configFile, function () { done(); });
   });
   
-  afterEach(function () {
-    try {
-      fs.rmdirSync(languageDir);
-    } catch (err) { /* Something wrong, not sure if I care. :p */}
-  });
-  
-  it('should create a folder for the language if it does not exist', function (done) {
-    fs.stat(languageDir, function (err, pathInfo) {
-      chai.expect(err).to.be.ok();
-      err.code.should.eql('ENOENT');
-      
-      cli.train({
-        language: 'javascript'
-      })
-      .then(function () {
-        fs.stat(languageDir, function (err, pathInfo) {
-          chai.expect(err).to.not.be.ok();
-          chai.expect(pathInfo).to.be.ok();
-          pathInfo.isDirectory().should.be.ok();
-          done();
-        });
-      }, function (err) {
-        done(err);
-      });
+  describe('Handling language directory', function () {
+    
+    afterEach(function () {
+      try {
+        fs.rmdirSync(languageDir);
+      } catch (err) { /* Something wrong, not sure if I care. :p */}
     });
-  });
-  
-  it('should fall back to configuration (default language) if none is provided', function (done) {
-    fs.stat(languageDir, function (err, pathInfo) {
-      chai.expect(err).to.be.ok();
-      err.code.should.eql('ENOENT');
-      
-      cli.train()
-      .then(function () {
-        fs.stat(languageDir, function (err, pathInfo) {
-          chai.expect(err).to.not.be.ok();
-          chai.expect(pathInfo).to.be.ok();
-          pathInfo.isDirectory().should.be.ok();
-          done();
-        });
-      }, function (err) {
-        done(err);
-      });
-    });
-  });
-  
-  it('should warn if no language is provided and no default language is configured.', function (done) {
-    fs.stat(languageDir, function (err, pathInfo) {
-      chai.expect(err).to.be.ok();
-      err.code.should.eql('ENOENT');
-      
-      cli
-        .init({ username: 'specs_user', access_key: 'specs_access_key', }, { force: true })
+    
+    it('should create a folder for the language if it does not exist', function (done) {
+      fs.stat(languageDir, function (err, pathInfo) {
+        chai.expect(err).to.be.ok();
+        err.code.should.eql('ENOENT');
+        
+        cli.train({
+          language: 'javascript'
+        })
         .then(function () {
-          cli.train()
-          .then(function () {
-            done(new Error('Something is wrong. This interaction should have failed.'));
-          }, function (err) {
-            err.message.should.match(/language/);
+          fs.stat(languageDir, function (err, pathInfo) {
+            chai.expect(err).to.not.be.ok();
+            chai.expect(pathInfo).to.be.ok();
+            pathInfo.isDirectory().should.be.ok();
             done();
           });
+        }, function (err) {
+          done(err);
         });
+      });
+    });
+    
+    it('should fall back to configuration (default language) if none is provided', function (done) {
+      fs.stat(languageDir, function (err, pathInfo) {
+        chai.expect(err).to.be.ok();
+        err.code.should.eql('ENOENT');
+        
+        cli.train()
+        .then(function () {
+          fs.stat(languageDir, function (err, pathInfo) {
+            chai.expect(err).to.not.be.ok();
+            chai.expect(pathInfo).to.be.ok();
+            pathInfo.isDirectory().should.be.ok();
+            done();
+          });
+        }, function (err) {
+          done(err);
+        });
+      });
+    });
+    
+    it('should warn if no language is provided and no default language is configured.', function (done) {
+      fs.stat(languageDir, function (err, pathInfo) {
+        chai.expect(err).to.be.ok();
+        err.code.should.eql('ENOENT');
+        
+        cli
+          .init({ username: 'specs_user', access_key: 'specs_access_key', }, { force: true })
+          .then(function () {
+            cli.train()
+            .then(function () {
+              done(new Error('Something is wrong. This interaction should have failed.'));
+            }, function (err) {
+              err.message.should.match(/language/);
+              done();
+            });
+          });
+      });
     });
   });
+  
 });

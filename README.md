@@ -39,8 +39,7 @@ JSHint is configured to help maintain code style. The code can be linted on dema
 
 The automated tests are written using mocha. And can be executed by executing either of this commands:
 
-```npm test```
-```mocha specs/```
+```npm test or mocha specs/ # from the root directory.```
 
 or
 

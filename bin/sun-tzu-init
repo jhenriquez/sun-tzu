@@ -6,18 +6,9 @@ var cli = require('../lib/cli');
 args
 	.option('-u, --username <username>', 'Codewars username.')
 	.option('-k, --key <key>', 'Codewars accesskey.')
+  .option('-l, --language <language>', 'Default language to train.')
 	.option('-f, --force', 'overwrite existen configuration file.')
 	.parse(process.argv);
-
-console.log(); // aesthetic empty Line
-
-if (!args.username) {
-  console.log('warning: no username specified.');
-}
-
-if (!args.key) {
-  console.log('warning: no access_key specified.');
-}
 
 console.log(); // aesthetic empty Line
 
@@ -29,7 +20,7 @@ if (args.force) {
 
 console.log(action_message);
 
-cli.init({ username: args.username || '', key: args.key || '' }, { force: !!args.force })
+cli.init({ username: args.username || '', key: args.key || '', language: args.language || '' }, { force: !!args.force })
   .then(function () {
 	  console.log('Done...');
   }, function (err) {

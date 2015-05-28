@@ -1,0 +1,44 @@
+#!/usr/bin/env node
+
+var fs        = require('fs');
+var cli       = require('../lib/cli');
+var IOHelpers = require('../lib/cli-io'); 
+var program   = require('commander');
+
+program
+  .option('-p, --peek')
+  .parse(process.argv);
+
+try {
+  var settings = IOHelpers.readGlobalSettings();
+} catch (err) {
+  console.log('No config file?! How rude!');
+  console.log('Good-Bye...');
+  return;
+}
+
+var language = program.args.shift();
+
+if (!settings.key) {
+  console.log('Code Wars access key is not configured.');
+  console.log('Good-Bye...');
+  return;
+}
+
+if (language && !/(?:ruby|javascript)/i.test(language)) {
+  console.log(language);
+  console.log('The provided language is not supported.');
+  console.log('Good-Bye...');
+  return;
+}
+
+cli
+  .train({ language: language, peek: !!program.peek })
+  .then(function (challenge) {
+    console.log('====================');
+    console.log('success');
+    console.log('====================');
+    console.log(challenge);
+  }, function (err) {
+    console.log(err);
+  });

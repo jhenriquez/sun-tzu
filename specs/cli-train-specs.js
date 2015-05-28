@@ -149,5 +149,7 @@ describe('tain - Command-Line Interface', function () {
           done(err);
         });
     });
+    
+    it('should not persist any code when challenge is being peek');
   });
 });

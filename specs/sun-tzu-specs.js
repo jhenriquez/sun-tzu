@@ -50,7 +50,7 @@ describe('Sun-Tzu', function () {
     });
     
     it('#train (random - peek) - should resolve to a new challenge without starting a session', function (done) {
-      tzu.train(Tzu.languages.JavaScript, Tzu.trainStrategies.random, true)
+      tzu.train({ language: Tzu.languages.JavaScript, strategy: Tzu.trainStrategies.random, peek: true })
         .then(function (challenge) {
           challenge.name.should.exist();
           challenge.description.should.exist();

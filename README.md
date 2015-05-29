@@ -5,7 +5,7 @@ it helps you keep your katas organized.
 
 ### Notes ###
 
-The project is still on very early stages, not even usable. It has only reached a barely useful state.
+This project is a work in progress. It has only reached a barely useful state.
 
 ### Usage ###
 

@@ -35,7 +35,7 @@
     "rimraf": "^2.3.4",
     "superagent-mock": "^1.1.0"
   },
-  "keywords": [],
+  "keywords": ["codewars", "katas", "api", "cli"],
   "dependencies": {
     "commander": "^2.8.1",
     "joi": "^6.4.1",

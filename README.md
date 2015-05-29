@@ -5,13 +5,17 @@ it helps you keep your katas organized.
 
 ### Notes ###
 
-The project is still on very early stages, not even usable. This readme will be updated as functionality becomes available.
+The project is still on very early stages, not even usable. It has only reached a barely useful state.
 
 ### Usage ###
 
-### configuration ###
+### Configuration ###
 
-A config file is any valid JSON holding the codewars username and access key, named ".sun-tzu".
+A config file is any valid JSON holding with the following fields:
+
+* username
+* access_key (required for most operations)
+* language (a default language to fallback to)
 
 ### Commands ###
 
@@ -22,8 +26,22 @@ The init command creates a configuration file (.sun-tzu) on the current director
 Options:
 
 -u, --username <username>
+	
 -k, --key <access_key>
+	
 -f, --force
+
+#### train ####
+
+Begins a new training session for the next code challenge (kata) within your training queue. It expects a language to be provided. If none, it will use the one configured, if any.
+
+sun-tzu train [language] [options]
+
+Options:
+
+-p, --peek 
+
+If you only want to peek at the next item in your queue, without removing it from the queue or beginning a new training session. It will NOT persist the challenge information.
 
 ### Development ###
 
@@ -37,7 +55,7 @@ JSHint is configured to help maintain code style. The code can be linted on dema
 
 #### Automated Tests ####
 
-The automated tests are written using mocha. And can be executed by executing either of this commands:
+The automated tests are written using mocha. Can be executed any of these commands:
 
 ```npm test or mocha specs/ # from the root directory.```
 

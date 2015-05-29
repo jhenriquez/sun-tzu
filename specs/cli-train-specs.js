@@ -144,52 +144,39 @@ describe('tain - Command-Line Interface', function () {
         }, done);
     });
     
-    it('should not persist the code or session when is undefined or has no valid data (is being peek)', function (done) {
+    it('should not persist neither directory, code or session when challenge is being peek', function (done) {
+      cli
+        .train({ language: 'javascript', peek: true })
+        .then(function (challenge) {
+          var challengeDir = path.join(process.cwd(), challenge.language, challenge.name);
+          IOHelpers.directoryExists(challengeDir).should.be.false();
+          done();
+        }, done);
+    });
+    
+    it('should not overwrite a pre-existent code file.', function (done) {
       cli
         .train({ language: 'javascript' })
         .then(function (challenge) {
           var codeFilename = challenge.name + IOHelpers.getLanguageExtension(challenge.language);
-          var codeFilePath = path.join(process.cwd(), challenge.language, challenge.name, codeFilename);
+          codeFilename = path.join(process.cwd(), challenge.language, challenge.name, codeFilename);
           
-          fs.readFile(codeFilePath, { encoding: 'utf8' },function (err, content) {
-            if (err) { return done(err); }
-            chai.expect(content).to.be.a('string');
-            content.should.eql('function toInteger(n) {\n  \n}');
-            
-            cli
-              .train({ language: 'javascript', peek: true })
-              .then(function (challenge) {
-                var codeFilename = challenge.name + IOHelpers.getLanguageExtension(challenge.language);
-                codeFilename = path.join(process.cwd(), challenge.language, challenge.name, codeFilename);
-                
-                fs.readFile(codeFilePath, { encoding: 'utf8' }, function (err, code) {
-                  if (err) { return done(err); }
-                  chai.expect(code).to.be.a('string');
-                  content.should.eql('function toInteger(n) {\n  \n}');
-                  
-                  var sessionFilePath = path.join(process.cwd(), challenge.language, challenge.name, cli.SESSION_FILENAME);
-                  
-                  fs.readFile(sessionFilePath, { encoding: 'utf8' }, function (err, session) {
-                    if (err) { return done(err); }
-                    session = JSON.parse(session);
-                    chai.expect(session).to.be.a('object');
-                    chai.expect(session.project).to.be.ok();
-                    chai.expect(session.solution).to.be.ok();
-                    done();
-                  });
-                  
-                });
-                
-              }, function (err) {
-                done(new Error('Something is wrong. This should not have failed. Error Message: ' + err.message));
-              });
-          });
+          var newFileContent = "New File Content!";
           
-        }, function (err) {
-          done(new Error('Something is wrong. This should not have failed. Error Message: ' + err.message));
-        });
+          IOHelpers
+            .writeContent(codeFilename, newFileContent)
+            .then(function () {
+              
+              cli
+                .train({ language: 'javascript' })
+                .then(function (challenge) {
+                  var content = fs.readFileSync(codeFilename, { encoding: 'utf8' });
+                  content.should.eql(newFileContent);
+                  done();
+                }, done);
+              
+            }, done);
+        }, done);
     });
-    
-    it('should not overwrite a pre-existent code file.');
   });
 });

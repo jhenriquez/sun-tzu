@@ -11,7 +11,7 @@ This project is a work in progress. It has only reached a barely useful state.
 
 ### Configuration ###
 
-A config file is any valid JSON holding with the following fields:
+A config file is any valid JSON with the following fields:
 
 * username
 * access_key (required for most operations)

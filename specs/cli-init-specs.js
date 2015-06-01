@@ -3,6 +3,7 @@ var path      = require('path');
 var chai      = require('chai');
 var dirtyChai = require('dirty-chai');
 var cli       = require('../lib/cli');
+var defaults  = require('../lib/defaults');
 
 describe('init - Command-Line Interface', function () {
   before(function () {
@@ -11,7 +12,7 @@ describe('init - Command-Line Interface', function () {
   });
   
   afterEach(function (done) {
-    fs.unlink(path.join(process.cwd(), cli.CONFIGURATION_FILENAME), function () {
+    fs.unlink(path.join(process.cwd(), defaults.CONFIGURATION_FILENAME), function () {
       done();
     });
   });
@@ -19,7 +20,7 @@ describe('init - Command-Line Interface', function () {
   it('should create the sun-tzu config file on the current directoy.', function (done) {
 	  cli.init({ username: 'username', key: 'some_access_key'})
       .then(function () {
-        fs.readFile(path.join(process.cwd(), cli.CONFIGURATION_FILENAME), function (err, data) {
+        fs.readFile(path.join(process.cwd(), defaults.CONFIGURATION_FILENAME), function (err, data) {
           if (err) { done(err); }
           var values = JSON.parse(data);
           values.username.should.eql('username');
@@ -52,7 +53,7 @@ describe('init - Command-Line Interface', function () {
       .then(function () {
         cli.init({ username: 'other_username', key: 'some_other_key'}, { force: true })
           .then(function () {
-            fs.readFile(path.join(process.cwd(), cli.CONFIGURATION_FILENAME), function (err, data) {
+            fs.readFile(path.join(process.cwd(), defaults.CONFIGURATION_FILENAME), function (err, data) {
               if (err) { done(err); }
               var values = JSON.parse(data);
               values.username.should.eql('other_username');

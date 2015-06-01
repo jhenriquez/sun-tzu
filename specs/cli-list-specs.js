@@ -3,6 +3,7 @@ var path                = require('path');
 var rimraf              = require('rimraf');
 var chai                = require('chai');
 var dirtyChai           = require('dirty-chai');
+var cli                 = require('../lib/cli');
 
 describe('list - Command-Line Interface', function () {
   var languageDir = path.join(process.cwd(),'javascript');
@@ -12,11 +13,13 @@ describe('list - Command-Line Interface', function () {
 	 chai.should(); 
   });
   
-  describe('Listing all languages', function () {
-    
+  it('should list all languages if none specified', function (done) {
+    cli
+      .list()
+      .then(function (challengeListing) {
+        
+      }, done);
   });
   
-  describe('Listing chanllenges by language', function () {
-    
-  });
+  it('should list a single language when one specified');
 });

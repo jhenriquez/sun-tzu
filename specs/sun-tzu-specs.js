@@ -5,6 +5,7 @@ var superagent = require('superagent');
 var Tzu        = require('../lib/sun-tzu');
 var supermock  = require('superagent-mock');
 var fixtures   = require('./response-fixtures');
+var defaults   = require('../lib/defaults');
 
 supermock(superagent, fixtures);
 
@@ -27,9 +28,7 @@ describe('Sun-Tzu', function () {
   		   .then(function (user) {
   		      user.username.should.eql('some_user');
   			  done();
-  		   }, function (e) {
-  			 done(new Error('Unexpected Error: ' + e));
-  		   });
+  		   }, done);
   	});
     
     it('#key - should match the configured (on environment)', function () {
@@ -44,25 +43,21 @@ describe('Sun-Tzu', function () {
           challenge.name.should.exist();
           challenge.description.should.exist();
           done();
-        }, function (err) {
-          done(err);
-        });
+        }, done);
     });
     
     it('#train (random - peek) - should resolve to a new challenge without starting a session', function (done) {
-      tzu.train({ language: Tzu.languages.JavaScript, strategy: Tzu.trainStrategies.random, peek: true })
+      tzu.train({ language: defaults.supportedLanguages.JavaScript, strategy: Tzu.trainStrategies.random, peek: true })
         .then(function (challenge) {
           challenge.name.should.exist();
           challenge.description.should.exist();
           chai.expect(challenge.session).to.not.exist();
           done();
-        }, function (err) {
-          done(err);
-        });
+        }, done);
     });
     
     it('#trainChallenge - should resolve to the requested challenge', function (done) {
-      tzu.trainChallenge('anything-to-integer', Tzu.languages.JavaScript)
+      tzu.trainChallenge('anything-to-integer', defaults.supportedLanguages.JavaScript)
         .then(function (challenge) {
           challenge.name.should.eql('Anything to integer');
           challenge.slug.should.eql('anything-to-integer');
@@ -70,9 +65,7 @@ describe('Sun-Tzu', function () {
           challenge.session.should.exist();
           challenge.session.setup.should.exist();
           done();
-        }, function (err) {
-          done(err);
-        });
+        }, done);
     });
     
     it('#attemptSolution - should resolve to a deferred id', function (done) {
@@ -84,9 +77,7 @@ describe('Sun-Tzu', function () {
       .then(function (rs) {
         rs.dmid.should.exist();
         done();
-      }, function (err) {
-        done(err);
-      });
+      }, done);
     });
     
     it('#finalizeSolution - should resolve to a deferred id', function (done) {
@@ -97,9 +88,7 @@ describe('Sun-Tzu', function () {
       .then(function (rs) {
         rs.success.should.exist();
         done();
-      }, function (err) {
-        done(err);
-      });
+      }, done);
     });
     
     it('#getDeferred - should resolve to a valid response', function (done) {
@@ -109,9 +98,7 @@ describe('Sun-Tzu', function () {
           rs.dmid.should.exist();
           rs.dmid.should.eql(':dmid');
           done();
-        }, function (err) {
-          done(err);
-        });
+        }, done);
     });
   });
   
@@ -126,9 +113,7 @@ describe('Sun-Tzu', function () {
        .then(function (user) {
           user.username.should.eql('constructor_user');
         done();
-       }, function (e) {
-         done(new Error('Unexpected Error: ' + e));
-       });
+       }, done);
     });
     
     it('#key - should match the configured (by constructor)', function () {

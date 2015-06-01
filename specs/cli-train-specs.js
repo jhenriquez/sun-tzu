@@ -5,10 +5,11 @@ var IOHelpers = require('../lib/cli-io');
 var rimraf    = require('rimraf');
 var chai      = require('chai');
 var dirtyChai = require('dirty-chai');
+var defaults  = require('../lib/defaults');
 
 describe('tain - Command-Line Interface', function () {
   var languageDir = path.join(process.cwd(),'javascript');
-  var configFile  = path.join(process.cwd(), cli.CONFIGURATION_FILENAME);
+  var configFile  = path.join(process.cwd(), defaults.CONFIGURATION_FILENAME);
   
   before(function (done) {
     chai.use(dirtyChai);
@@ -116,7 +117,7 @@ describe('tain - Command-Line Interface', function () {
       cli
         .train({ language: 'javascript' })
         .then(function (challenge) {
-          var sessionFilePath = path.join(process.cwd(), challenge.language, challenge.name, cli.SESSION_FILENAME);
+          var sessionFilePath = path.join(process.cwd(), challenge.language, challenge.name, defaults.SESSION_FILENAME);
           fs.readFile(sessionFilePath, function (err, content) {
             if (err) { return done(err); }
             var session = JSON.parse(content);

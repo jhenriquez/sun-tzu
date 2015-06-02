@@ -19,7 +19,7 @@ describe('tain - Command-Line Interface', function () {
       username: 'specs_user',
       access_key: 'specs_access_key',
       language: 'javascript'
-    })
+    }, { force: true })
     .then(function () { done(); }, done);
   });
   

@@ -43,6 +43,10 @@ Options:
 
 If you only want to peek at the next item in your queue, without removing it from the queue or beginning a new training session. It will NOT persist the challenge information.
 
+#### list ####
+
+Displays a (rather simple and ugly, for the moment) list of the challenges stored in the current dir. If no language is specified it will look for all challenges in all supported languages.
+
 ### Development ###
 
 #### Setup ####

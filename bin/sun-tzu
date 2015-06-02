@@ -5,6 +5,7 @@ var program = require('commander');
   program
     .command('init', 'Initializes a kata storage directory.')
 	.command('train [language]', 'Sets up the next challenge in your training path on the specified language.')
+	.command('list [language]', 'Lists the katas in the local directory.')
 //	.command('challenge [kata]', '')
 //	.command('solve [kata]', '')
 //	.command('complete [kata]', '')

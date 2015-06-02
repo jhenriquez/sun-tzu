@@ -1,0 +1,35 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var cli     = require('../lib/cli');
+
+program
+  .parse(process.argv);
+  
+
+cli
+  .list(program.args.shift())
+  .then(printListing, function (err) {
+	 console.log('Oops...');
+	 console.log('Something went wrong...');
+	 console.log();
+	 console.log(err);
+	 console.log();
+	 console.log('Goodbye...'); 
+  });
+  
+function printListing(challengeListing) {
+
+  console.log();
+  console.log('Total Challenges: ' + challengeListing.count());
+  console.log();
+  
+  Object.keys(challengeListing).forEach(function (language) {
+  	console.log(language);
+  	console.log('Total: ' + challengeListing[language].length);
+  	challengeListing[language].forEach(function (challenge) {
+  	  console.log('Name: ' + challenge.name);
+  	  console.log();
+  	});
+  });
+}
